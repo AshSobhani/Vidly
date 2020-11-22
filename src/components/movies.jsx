@@ -113,57 +113,45 @@ export class Movies extends Component {
 		const { totalCount, data: movies } = this.getPagedData();
 		const { user } = this.props;
 
-		if (totalCount === 0) {
-			return (
-				<div>
-					<h1>MovieHub</h1>
-					<p>No movies have been found in our records</p>
+		return (
+			<div className="row">
+				<div className="col-3">
+					<ListGroup
+						items={this.state.genres}
+						selectedGenre={this.state.selectedGenre}
+						onItemSelect={this.handleGenreSelect}
+					/>
 				</div>
-			);
-		} else {
-			return (
-				<div className="row">
-					<div className="col-3">
-						<ListGroup
-							items={this.state.genres}
-							selectedGenre={this.state.selectedGenre}
-							onItemSelect={this.handleGenreSelect}
-						/>
-					</div>
-					<div className="col">
-						{user && (
-							<Link
-								to="/movies/new"
-								className="btn btn-primary mb-4"
-							>
-								New Movie
-							</Link>
-						)}
-						<p>
-							A total of {totalCount} movies have been found in
-							our records
-						</p>
-						<SearchBox
-							value={searchQuery}
-							onChange={this.handleSearch}
-						/>
-						<MoviesTable
-							movies={movies}
-							sortColumn={sortColumn}
-							onSort={this.handleSort}
-							onLike={this.handleLike}
-							onDelete={this.handleDelete}
-						/>
-						<Pagination
-							itemsCount={totalCount}
-							pageSize={pageSize}
-							currentPage={currentPage}
-							onPageChange={this.handlePageChange}
-						/>
-					</div>
+				<div className="col">
+					{user && (
+						<Link to="/movies/new" className="btn btn-primary mb-4">
+							New Movie
+						</Link>
+					)}
+					<p>
+						A total of {totalCount} movies have been found in our
+						records
+					</p>
+					<SearchBox
+						value={searchQuery}
+						onChange={this.handleSearch}
+					/>
+					<MoviesTable
+						movies={movies}
+						sortColumn={sortColumn}
+						onSort={this.handleSort}
+						onLike={this.handleLike}
+						onDelete={this.handleDelete}
+					/>
+					<Pagination
+						itemsCount={totalCount}
+						pageSize={pageSize}
+						currentPage={currentPage}
+						onPageChange={this.handlePageChange}
+					/>
 				</div>
-			);
-		}
+			</div>
+		);
 	}
 }
 
